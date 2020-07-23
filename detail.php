@@ -152,13 +152,13 @@
                                     $codigo_postal = '1111';
 
                                     //Informacion del Producto
-                                    $id = '1234';
+                                    $id = '0007'; //Original es 1234
                                     $nombre_prod = $_POST['title'];
                                     $descripcion_prod = 'Dispositivo móvil de Tienda e-commerce';
                                     $url_imagen = $url.substr($_POST['img'],1,strlen($_POST['img']));
                                     $cantidad = 1;
                                     $precio = (int) $_POST['price'];
-                                    $external_reference = 'martin.a.chaparro@gmail.com';
+                                    $external_reference = 'email@gmail.com';//martin.a.chaparro@gmail.com
 
                                     //Empiezo a armar flujo de mercado pago
                                     // SDK de Mercado Pago
