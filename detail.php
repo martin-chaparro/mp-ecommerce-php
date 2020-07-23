@@ -183,19 +183,19 @@
                                     );
 
                                     //Genero Objeto del pagador
-                                    $payer = new MercadoPago\Payer();
-                                    $payer->name = $nombre;
-                                    $payer->surname = $apellido;
-                                    $payer->email = $email;
-                                    $payer->phone = array(
-                                        "area_code" => $codigo_area,
-                                        "number" => $telefono
-                                    );
-                                    $payer->address = array(
-                                        "street_name" => $calle,
-                                        "street_number" => $numero,
-                                        "zip_code" => $codigo_postal
-                                    );
+                                   // $payer = new MercadoPago\Payer();
+                                  //  $payer->name = $nombre;
+                                  //  $payer->surname = $apellido;
+                                  //  $payer->email = $email;
+                                  //  $payer->phone = array(
+                                   //     "area_code" => $codigo_area,
+                                  //      "number" => $telefono
+                                 //   );
+                                 //   $payer->address = array(
+                                 //       "street_name" => $calle,
+                                 //       "street_number" => $numero,
+                                 //       "zip_code" => $codigo_postal
+                                //    );
 
                                     //Genero Objeto producto
                                     $item = new MercadoPago\Item();
@@ -218,7 +218,7 @@
 
                                     $preference->items = array($item);
                                     $preference->external_reference = $external_reference;
-                                    $preference->payer = $payer;
+                                 //   $preference->payer = $payer;
 
                                     $preference->save();
 
