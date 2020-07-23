@@ -130,7 +130,107 @@
                                             <?php echo "$" . $_POST['unit'] ?>
                                         </h3>
                                     </div>
-                                    <button type="submit" class="mercadopago-button" formmethod="post">Pagar</button>
+                                    <!--Creo el Boton para pagar-->
+                                    <?php
+                                    //var_dump($_POST);
+                                    //Obtengo la Url
+                                    $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+                                    //var_dump($url);
+                                    //Creo las variables con los datos requeridos
+                                    define('ACCESS_TOKEN','APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398');
+                                    define('INTEGRATOR_ID','dev_24c65fb163bf11ea96500242ac130004');
+                                    $installments = 6; //cantidad de cuotas maximas
+
+                                    //Informacion del pagador
+                                    $nombre = 'Lalo';
+                                    $apellido = 'Landa';
+                                    $email = 'test_user_63274575@testuser.com';
+                                    $codigo_area = '11';
+                                    $telefono = '22223333';
+                                    $calle = 'False';
+                                    $numero = 123;
+                                    $codigo_postal = '1111';
+
+                                    //Informacion del Producto
+                                    $id = '1234';
+                                    $nombre_prod = $_POST['title'];
+                                    $descripcion_prod = 'Dispositivo móvil de Tienda e-commerce';
+                                    $url_imagen = $url.substr($_POST['img'],1,strlen($_POST['img']));
+                                    $cantidad = 1;
+                                    $precio = (int) $_POST['price'];
+                                    $external_reference = 'martin.a.chaparro@gmail.com';
+
+                                    //Empiezo a armar flujo de mercado pago
+                                    // SDK de Mercado Pago
+                                    require __DIR__ .  '/vendor/autoload.php';
+
+                                    // Agrega credenciales
+                                    MercadoPago\SDK::setAccessToken(ACCESS_TOKEN);
+                                    MercadoPago\SDK::setIntegratorId(INTEGRATOR_ID);
+
+                                    // Crea un objeto de preferencia
+                                    $preference = new MercadoPago\Preference();
+
+                                    //Excluyo Pago con tarjeta AMEX y ATM, Limito Nro de Cuotas a 6
+                                    $preference->payment_methods = array(
+                                        "excluded_payment_methods" => array(
+                                            array("id" => "amex")
+                                        ),
+                                        "excluded_payment_types" => array(
+                                            array("id" => "atm")
+                                        ),
+                                        "installments" => $installments
+                                    );
+
+                                    //Genero Objeto del pagador
+                                    $payer = new MercadoPago\Payer();
+                                    $payer->name = $nombre;
+                                    $payer->surname = $apellido;
+                                    $payer->email = $email;
+                                    $payer->phone = array(
+                                        "area_code" => $codigo_area,
+                                        "number" => $telefono
+                                    );
+                                    $payer->address = array(
+                                        "street_name" => $calle,
+                                        "street_number" => $numero,
+                                        "zip_code" => $codigo_postal
+                                    );
+
+                                    //Genero Objeto producto
+                                    $item = new MercadoPago\Item();
+                                    $item->id = $id;
+                                    $item->title = $nombre_prod;
+                                    $item->description = $descripcion_prod;
+                                    $item->quantity = $cantidad;
+                                    $item->currency_id = "ARS";
+                                    $item->unit_price = $precio;
+                                    $item->picture_url = $url_imagen;
+
+                                    //Armo las Backs Urls
+                                    $preference->back_urls = array(
+                                        "success" => $url."/respuesta.php",
+                                        "failure" => $url."/respuesta.php",
+                                        "pending" => $url."/respuesta.php"
+                                    );
+                                    $preference->auto_return = "approved";
+                                    $preference->notification_url = $url."/notification.php";
+
+                                    $preference->items = array($item);
+                                    $preference->external_reference = $external_reference;
+                                    $preference->payer = $payer;
+
+                                    $preference->save();
+
+                                    ?>
+                                    <form action="/procesar-pago" method="POST">
+                                        <script
+                                                src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
+                                                data-preference-id="<?php echo $preference->id; ?>"
+                                                data-button-label="Pagar la compra">
+                                        </script>
+                                    </form>
+
                                 </div>
                             </div>
                         </div>
