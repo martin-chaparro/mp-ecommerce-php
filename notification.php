@@ -1,7 +1,6 @@
 <?php
 
-$logger1  = $_GET.PHP_EOL;
-$logger2  = $_GET.PHP_EOL;
-file_put_contents('log_1_'.date("j.n.Y").'.log', $logger1, FILE_APPEND);
-file_put_contents('log_2_'.date("j.n.Y").'.log', $logger2, FILE_APPEND);
-
+error_log("===========  POST  ============== ".print_r($_POST, true));
+error_log("===========  REQUEST  ============== ".print_r($_REQUEST, true));
+$entityBody = file_get_contents('php://input');
+error_log("===========  TODO  ============== ".print_r($entityBody, true));
