@@ -78,8 +78,29 @@
                                         Resultado de la Compra
                                     </h2>
                                 <?php
-                                    var_dump($_POST);
                                     var_dump($_GET);
+                                    /*
+                                     * array(9) {
+                                          ["collection_id"]=>
+                                          string(10) "7716813086"
+                                          ["collection_status"]=>
+                                          string(8) "approved"
+                                          ["external_reference"]=>
+                                          string(15) "email@gmail.com"
+                                          ["payment_type"]=>
+                                          string(11) "credit_card"
+                                          ["merchant_order_id"]=>
+                                          string(10) "1615994758"
+                                          ["preference_id"]=>
+                                          string(46) "469485398-53c237b8-2094-4f72-a62f-252f63702d6b"
+                                          ["site_id"]=>
+                                          string(3) "MLA"
+                                          ["processing_mode"]=>
+                                          string(10) "aggregator"
+                                          ["merchant_account_id"]=>
+                                          string(4) "null"
+}
+                                     */
                                 ?>
 
                             </div>
