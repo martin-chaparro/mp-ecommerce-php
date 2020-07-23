@@ -225,9 +225,9 @@
 
                                     //Armo las Backs Urls
                                     $preference->back_urls = array(
-                                        "success" => $url."/respuesta.php",
-                                        "failure" => $url."/respuesta.php",
-                                        "pending" => $url."/respuesta.php"
+                                        "success" => $url."/success.php",
+                                        "failure" => $url."/failure.php",
+                                        "pending" => $url."/pending.php"
                                     );
                                     $preference->auto_return = "approved";
                                     $preference->notification_url = $url."/notification.php";
